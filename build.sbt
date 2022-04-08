@@ -26,6 +26,7 @@ libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
   "org.scalatra" %% "scalatra-json" % ScalatraVersion,
   "com.github.ben-manes.caffeine" % "caffeine" % caffeineCache,
+  "org.apache.logging.log4j" % "log4j-core" % "2.17.2",
   "org.jsoup" % "jsoup" % jsoupVersion,
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
