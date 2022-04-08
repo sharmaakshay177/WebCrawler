@@ -1,8 +1,8 @@
 package org.example.webcrawler.process
 
 import com.typesafe.scalalogging.StrictLogging
-import org.example.webcrawler.model.{RequestResponse, UrlResponse}
-import org.example.webcrawler.process.cache.WebCrawler
+import org.example.webcrawler.model.{RequestBody, RequestResponse, UrlResponse}
+import org.example.webcrawler.process.crawl.WebCrawler
 
 import scala.collection.mutable.ListBuffer
 
@@ -16,8 +16,8 @@ class CrawlProcessor(webCrawler: WebCrawler) extends StrictLogging {
   private val errorList: ListBuffer[String]      = ListBuffer.empty[String]
   private val responses: ListBuffer[UrlResponse] = ListBuffer.empty[UrlResponse]
 
-  def getScrapedDataForUrl(urls: List[String]): RequestResponse = {
-    urls.map(url => webCrawler.getScrappedData(url)).foreach {
+  def getScrapedDataForUrl(requestBody: RequestBody): RequestResponse = {
+    requestBody.urls.map(url => webCrawler.getScrappedData(url)).foreach {
       case Left(errorMessage) => errorList.addOne(errorMessage)
       case Right(urlResp)     => responses.addOne(urlResp)
     }

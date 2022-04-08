@@ -2,9 +2,9 @@ package org.example.webcrawler.services
 
 import io.circe.generic.auto._
 import io.circe.syntax._
-import org.example.webcrawler.model.{RequestBody, RequestResponse, UrlResponse}
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.should.Matchers
+import org.example.webcrawler.generators.TestData._
 
 class RequestHelperServiceSpec extends AnyFreeSpecLike with Matchers {
 
@@ -12,9 +12,7 @@ class RequestHelperServiceSpec extends AnyFreeSpecLike with Matchers {
 
   "RequestHelperService" - {
     "should be able to parse json body to request body" in {
-      val requestBodyExpected = RequestBody(
-        List("https://google.com", "https://github.com", "https://sharmaakshay177.github.io/personal-website/")
-      )
+      val requestBodyExpected = genRequestBody.sampled
 
       val jsonNoSpaces = requestBodyExpected.asJson.noSpaces
       val json2Spaces  = requestBodyExpected.asJson.spaces2
@@ -26,11 +24,8 @@ class RequestHelperServiceSpec extends AnyFreeSpecLike with Matchers {
     }
 
     "should be able to convert RequestResponse to json" in {
-      val urlResponse     = UrlResponse("https://google.com", "some-data-from-crawler")
-      val requestResponse = RequestResponse(List(urlResponse), None)
-      val responseJson    = """{"result":[{"url":"https://google.com","data":"some-data-from-crawler"}],"error":null}"""
-
-      service.getResponse(requestResponse) shouldBe responseJson
+      val requestResponse = genRequestResponse.sampled
+      service.getResponse(requestResponse) shouldBe requestResponse.asJson.noSpaces
     }
   }
 

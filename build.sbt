@@ -13,6 +13,7 @@ val scalaCheckVersion = "1.15.4"
 val jacksonVersion = "2.13.2"
 val scalaMockVersion = "5.2.0"
 val jsoupVersion = "1.14.3"
+val caffeineCache = "3.0.6"
 
 lazy val root = (project in file("."))
   .settings(
@@ -24,6 +25,7 @@ libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra" % ScalatraVersion,
   "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
   "org.scalatra" %% "scalatra-json" % ScalatraVersion,
+  "com.github.ben-manes.caffeine" % "caffeine" % caffeineCache,
   "org.jsoup" % "jsoup" % jsoupVersion,
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
@@ -36,7 +38,9 @@ libraryDependencies ++= Seq(
   "org.scalactic" %% "scalactic" % scalaTest,
   "org.scalacheck" %% "scalacheck" % scalaCheckVersion % "test",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
-  "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
+  "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion,
+  "org.eclipse.jetty" % "jetty-webapp" % "11.0.8" % "container",
+  "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" %     "container;provided;test" artifacts Artifact("javax.servlet", "jar", "jar"),
 )
 
 // see to refactor

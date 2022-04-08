@@ -2,6 +2,13 @@
 .bloop
 .bsp
 
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
 # metals
 project/metals.sbt
 .metals
@@ -16,6 +23,21 @@ project/metals.sbt
 project/project/
 project/target/
 target/
+project/boot
+lib_managed/*
+project/build/target
+project/build/lib_managed
+project/build/src_managed
+project/plugins/lib_managed
+project/plugins/target
+project/plugins/src_managed
+project/plugins/project
+
+core/lib_managed
+core/target
+pubsub/lib_managed
+pubsub/target
+
 
 # eclipse
 build/
@@ -32,11 +54,13 @@ bin/
 *.ipr
 *.iws
 .idea
+*.eml
+.*.sw?
 
 # other?
 .history
 .scala_dependencies
 .cache-main
 
-#general
+# java specific
 *.class

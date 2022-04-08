@@ -1,4 +1,4 @@
-package org.example.webcrawler.process.cache
+package org.example.webcrawler.process.crawl
 
 import com.typesafe.scalalogging.StrictLogging
 import org.example.webcrawler.ErrorMessage
