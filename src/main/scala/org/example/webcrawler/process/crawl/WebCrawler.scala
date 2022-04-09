@@ -19,7 +19,9 @@ class WebCrawler extends StrictLogging {
   def getScrappedData(url: String): Either[ErrorMessage, UrlResponse] = {
     val scrappedData = scrapUrl(url)
     scrappedData match {
-      case Left(errorMessage) => Left(errorMessage)
+      case Left(errorMessage) =>
+        logger.info(s"Scraping Error :$errorMessage")
+        Left(errorMessage)
       case Right(doc)         => Right(UrlResponse(url, prepareData(doc)))
     }
   }

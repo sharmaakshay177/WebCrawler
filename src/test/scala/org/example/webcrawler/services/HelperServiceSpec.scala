@@ -6,9 +6,9 @@ import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.should.Matchers
 import org.example.webcrawler.generators.TestData._
 
-class RequestHelperServiceSpec extends AnyFreeSpecLike with Matchers {
+class HelperServiceSpec extends AnyFreeSpecLike with Matchers {
 
-  private val service = new RequestHelperService
+  private val service = new HelperService
 
   "RequestHelperService" - {
     "should be able to parse json body to request body" in {

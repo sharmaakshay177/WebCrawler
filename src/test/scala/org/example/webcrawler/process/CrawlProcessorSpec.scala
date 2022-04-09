@@ -4,14 +4,22 @@ import org.example.webcrawler.generators.TestData._
 import org.example.webcrawler.model.RequestResponse
 import org.example.webcrawler.process.cache.CacheService
 import org.example.webcrawler.process.crawl.WebCrawler
+import org.scalatest.BeforeAndAfter
 import org.scalatest.freespec.AnyFreeSpecLike
 import org.scalatest.matchers.should.Matchers
 
-class CrawlProcessorSpec extends AnyFreeSpecLike with Matchers {
+class CrawlProcessorSpec extends AnyFreeSpecLike with Matchers with BeforeAndAfter {
 
   private val webCrawler   = new WebCrawler
   private val cacheService = new CacheService
   private val crawlProcess = new CrawlProcessor(webCrawler, cacheService)
+
+  after {
+    cacheService.cache.clear()
+  }
+
+  // these test will require network connection to make actual call to get url data
+  // can be mocked as well, but direct call make more sense as this involves actual scrapping
 
   "Web crawler" - {
     "should be get a valid RequestResponse by making a call and updating in cache as well" in {

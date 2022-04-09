@@ -24,7 +24,7 @@ class CrawlProcessor(webCrawler: WebCrawler, cacheService: CacheService) extends
           logger.info(s"Cache Hit :$cacheResponse")
           responses.addOne(cacheResponse)
         case None                =>
-          // sync call will go from here for now !!
+          // sync calls going on !!
           logger.info(s"Calling Crawler Service")
           webCrawler.getScrappedData(url) match {
             case Left(errorString) => errorList.addOne(errorString)
@@ -37,7 +37,7 @@ class CrawlProcessor(webCrawler: WebCrawler, cacheService: CacheService) extends
     }
     logger.info(s"Errors Encountered :${errorList.mkString}")
     logger.info(s"Responses Gathered :${responses.mkString}")
-    RequestResponse(responses.toList, Option(errorList.mkString))
+    RequestResponse(responses.toList, if (errorList.nonEmpty) Some(errorList.mkString) else None)
   }
 
 }
