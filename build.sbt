@@ -14,6 +14,7 @@ val jacksonVersion = "2.13.2"
 val scalaMockVersion = "5.2.0"
 val jsoupVersion = "1.14.3"
 val caffeineCache = "3.0.6"
+val AkkaVersion = "2.6.19"
 
 lazy val root = (project in file("."))
   .settings(
@@ -26,10 +27,13 @@ libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
   "org.scalatra" %% "scalatra-json" % ScalatraVersion,
   "com.github.ben-manes.caffeine" % "caffeine" % caffeineCache,
+  "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
   "org.apache.logging.log4j" % "log4j-core" % "2.17.2",
   "org.scalatestplus" %% "mockito-3-4" % "3.2.10.0" % Test,
-  "org.slf4j" % "slf4j-api" % "1.7.36",
-  "org.slf4j" % "slf4j-simple" % "1.7.36" % Test,
+//  "org.slf4j" % "slf4j-api" % "1.7.36",
+  "org.slf4j" % "slf4j-simple" % "1.7.36",
+//  "org.slf4j" % "slf4j-jdk14" % "1.7.36" % Test,
+//  "org.slf4j" % "slf4j-reload4j" % "1.7.36" % Test,
   "org.jsoup" % "jsoup" % jsoupVersion,
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
