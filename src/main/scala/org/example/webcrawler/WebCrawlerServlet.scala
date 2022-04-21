@@ -13,6 +13,10 @@ class WebCrawlerServlet(service: HelperService, process: CrawlProcessor)
     contentType = "json"
   }
 
+  get("/ping"){
+    "pong"
+  }
+
   post("/api/crawl") {
     logger.info(s"Request Received for ${request.getRequestURL}")
 

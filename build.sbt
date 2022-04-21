@@ -30,14 +30,12 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
   "org.apache.logging.log4j" % "log4j-core" % "2.17.2",
   "org.scalatestplus" %% "mockito-3-4" % "3.2.10.0" % Test,
-//  "org.slf4j" % "slf4j-api" % "1.7.36",
   "org.slf4j" % "slf4j-simple" % "1.7.36",
-//  "org.slf4j" % "slf4j-jdk14" % "1.7.36" % Test,
-//  "org.slf4j" % "slf4j-reload4j" % "1.7.36" % Test,
   "org.jsoup" % "jsoup" % jsoupVersion,
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-parser" % circeVersion,
+  "com.typesafe" % "config" % "1.4.2",
   "org.json4s" %% "json4s-jackson" % Json4sVersion,
   "javax.servlet" % "javax.servlet-api" % javaXServlet % "provided",
   "com.typesafe.scala-logging" %% "scala-logging" % ScalaLoggingVersion,
@@ -57,3 +55,6 @@ libraryDependencies ++= Seq(
 //  "io.circe" %% "circe-generic",
 //  "io.circe" %% "circe-parser"
 //).map(_ % circeVersion)
+enablePlugins(SbtTwirl)
+enablePlugins(JettyPlugin)
+//addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt" % "0.4.0")

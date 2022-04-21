@@ -11,7 +11,7 @@ import org.example.webcrawler.process.crawl.WebCrawler
 
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import scala.concurrent.{Await, ExecutionContext}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 import scala.util.{Failure, Success}
 
@@ -50,7 +50,7 @@ object MainActorHandler {
   final case class EntireResponse(responses: List[UrlResponse], errors: Option[String]) extends RequestResponse
   final case class ErrorResponse(errorMessage: String) extends RequestResponse
   final case class AggregatedResponse(responses: List[UrlResponse], errors: Option[String]) extends RequestResponse
-  implicit val timeout: Timeout = Timeout(10.seconds)
+  implicit val timeout: Timeout = Timeout(5.seconds)
 
   def apply(): Behavior[RequestResponse] =
     Behaviors.receive { (context, message) =>
@@ -72,11 +72,16 @@ object MainActorHandler {
     val system: ActorSystem[RequestResponse] = ActorSystem(MainActorHandler(), "MasterActorSystem")
 
     import akka.actor.typed.scaladsl.AskPattern._
-    implicit val ec: ExecutionContext = system.executionContext
-    implicit val timeout: Timeout = Timeout(3.seconds)
-    implicit val scheduler: Scheduler = system.scheduler
+    import akka.util.Timeout
 
-    system ! ToCrawl(urls)
+    // implicit timeout
+    implicit val timeout: Timeout = 3.seconds
+    // implicit actor system
+    implicit val system2: ActorSystem[_] = system
+    // result
+    val result: Future[MainActorHandler.RequestResponse] = ???
+
+
     // https://www.baeldung.com/scala/akka-request-response
     // https://doc.akka.io/docs/akka/current/typed/interaction-patterns.html
   }

@@ -1,5 +1,6 @@
 import com.typesafe.scalalogging.StrictLogging
 import org.example.webcrawler.WebCrawlerServlet
+import org.example.webcrawler.config.AppConfig
 import org.example.webcrawler.process.CrawlProcessor
 import org.example.webcrawler.process.cache.CacheService
 import org.example.webcrawler.process.crawl.WebCrawler
@@ -13,6 +14,9 @@ class ScalatraBootstrap extends LifeCycle with StrictLogging {
   val service   = new HelperService
   val processor = new CrawlProcessor(new WebCrawler, new CacheService)
 
-  override def init(context: ServletContext): Unit =
+  override def init(context: ServletContext): Unit = {
+    val conf = AppConfig.live
+    sys.props(org.scalatra.EnvironmentKey) = conf.env
     context.mount(new WebCrawlerServlet(service, processor), "/*")
+  }
 }
