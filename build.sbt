@@ -17,7 +17,8 @@ val caffeineCache = "3.0.6"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "WebCrawler"
+    name := "WebCrawler",
+    Test / fork := true
   )
 
 // dependencies
@@ -46,10 +47,16 @@ libraryDependencies ++= Seq(
   "org.eclipse.jetty" % "jetty-webapp" % "11.0.8" % "container",
   "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" %     "container;provided;test" artifacts Artifact("javax.servlet", "jar", "jar"),
 )
+val zioVersion = "2.0.0-RC2"
+val zioJsonVersion = "0.3.0-RC3"
+val zioHttpVersion = "2.0.0-RC4"
+val zioDependencies = Seq(
+  "dev.zio"               %% "zio"                               % zioVersion,
+  "dev.zio"               %% "zio-test"                          % zioVersion     % Test,
+  "dev.zio"               %% "zio-test-sbt"                      % zioVersion     % Test,
+  "dev.zio"               %% "zio-json"                          % zioJsonVersion,
+  "io.d11"                %% "zhttp"                             % zioHttpVersion,
+  "io.d11"                %% "zhttp-test"                        % zioHttpVersion % Test,
+)
 
-// see to refactor
-//libraryDependencies ++= Seq(
-//  "io.circe" %% "circe-core",
-//  "io.circe" %% "circe-generic",
-//  "io.circe" %% "circe-parser"
-//).map(_ % circeVersion)
+libraryDependencies ++= zioDependencies
