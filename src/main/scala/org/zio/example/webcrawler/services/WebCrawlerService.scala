@@ -32,16 +32,21 @@ final case class WebCrawlerServiceLive(cache: ZioCacheService) extends WebCrawle
 
   override def getPayloadResponse(
     urls: List[String],
-    responses: List[CrawledResponse] = List.empty[CrawledResponse]
-  ): Task[EntirePayloadResponse] = {
-    ??? // what to do here ?
-  }
+  ): Task[EntirePayloadResponse] =
+    ???
 
   override def getCrawledData(url: String): Task[CrawledResponse] =
     for {
       document        <- scrapUrl(url)
       crawledResponse <- prepareData(url, document)
+      _               <- cache.putEntry(url, crawledResponse)
     } yield crawledResponse
+
+  private def cacheOrCall(url: String): Task[CrawledResponse] =
+    for {
+      cacheHit <- cache.get(url)
+      resp     <- ZIO.attempt(cacheHit.get) orElse getCrawledData(url)
+    } yield resp
 
   private def scrapUrl(url: String): Task[Document] =
     ZIO.fromTry(Try(Jsoup.connect(url).get()))

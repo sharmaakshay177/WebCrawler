@@ -1,14 +1,14 @@
 package org.zio.example.webcrawler.services
 
 import org.zio.example.webcrawler.model.CrawledResponse
-import zio.{Function1ToLayerOps, Task, URLayer, ZIO}
+import zio.{Function1ToLayerOps, UIO, URLayer, ZIO}
 
 import scala.collection.concurrent.TrieMap
 
 trait ZioCacheService {
-  def get(url: String): Task[Option[CrawledResponse]]
+  def get(url: String): UIO[Option[CrawledResponse]]
 
-  def putEntry(url: String, record: CrawledResponse): Task[Unit]
+  def putEntry(url: String, record: CrawledResponse): UIO[Unit]
 }
 
 object ZioCacheService {
@@ -22,10 +22,10 @@ object ZioCacheService {
 final case class ZioCacheServiceLive(cache: TrieMap[String, CrawledResponse] = TrieMap.empty[String, CrawledResponse])
     extends ZioCacheService {
 
-  override def get(url: String): Task[Option[CrawledResponse]] = ZIO.attempt(cache.get(url))
+  override def get(url: String): UIO[Option[CrawledResponse]] = UIO.succeed(cache.get(url))
 
-  override def putEntry(url: String, record: CrawledResponse): Task[Unit] =
-    ZIO.attempt(cache.put(url, record)) *> ZIO.unit
+  override def putEntry(url: String, record: CrawledResponse): UIO[Unit] =
+    UIO.succeed(cache.put(url, record)) *> ZIO.unit
 }
 
 object ZioCacheServiceLive {
